@@ -3,15 +3,15 @@ class Solution {
         // return f(m-1,n-1); --> simple recursion(TLE)
        
        
-        // int[][]dp = new int[m][n]; --> Memoization
-        // for(int i=0; i<m; i++){
-        //     Arrays.fill(dp[i], -1);
-        // }
-        // return f2(m-1, n-1, dp);
+        int[][]dp = new int[m][n]; //--> Memoization
+        for(int i=0; i<m; i++){
+            Arrays.fill(dp[i], -1);
+        }
+        return f2(m-1, n-1, dp);
         
         // return f3(m, n); --> tabulation
 
-        return f4(m, n); //--> space optimised
+        // return f4(m, n); //--> space optimised
 
 
     }
