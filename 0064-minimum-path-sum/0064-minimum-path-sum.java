@@ -7,7 +7,8 @@ class Solution {
             Arrays.fill(dp[i], -1);
         }
         // return f(grid, m-1, n-1, dp);
-        return f2(grid, m, n);
+        // return f2(grid, m, n);
+        return f3(grid, m, n);
     }
     int f(int[][]grid, int i, int j, int[][] dp){
         if(i==0 && j==0) return grid[0][0];
@@ -33,5 +34,22 @@ class Solution {
                 }
             }   
             return dp[m-1][n-1];
+    }
+     int f3(int[][]grid, int m, int n){
+            int[] prev = new int[m];
+            for(int i=0; i<m; i++){
+                int[] curr = new int[n];
+                for(int j=0; j<n; j++){
+                    if(i==0 && j==0) curr[i] = grid[0][0];
+                    else{
+                        int up= Integer.MAX_VALUE, left =  Integer.MAX_VALUE;
+                        if(i>0) up =  prev[j];
+                        if(j>0) left = curr[j-1];
+                        curr[j] = Math.min(up, left) + grid[i][j];
+                    }
+                }
+                prev = curr;
+            }   
+            return prev[n-1];
     }
 }
