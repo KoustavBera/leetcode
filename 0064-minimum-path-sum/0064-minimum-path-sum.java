@@ -21,7 +21,7 @@ return f(grid, m-1, n-1, dp, 0);
         int up = f(grid, i-1, j, dp, ans);
         int left = f(grid, i, j-1, dp , ans);
 
-        ans = ans +  (int) Math.min(up, left) + grid[i][j];
+        ans +=  (int) Math.min(up, left) + grid[i][j];
         return dp[i][j] = ans;
     }
 }
