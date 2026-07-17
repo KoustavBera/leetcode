@@ -1,4 +1,3 @@
-# Write your MySQL query statement below
 with years as
 (
     select *, dense_rank() over(
