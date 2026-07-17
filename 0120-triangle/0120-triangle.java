@@ -8,7 +8,9 @@ class Solution {
         }
         // return f(triangle, 0, 0, i,  dp);
         //tabulation
-        return f2(triangle);
+        // return f2(triangle);
+        return f3(triangle);
+
     }
     int f(List<List<Integer>>  triangle,int i, int j, int n, int[][]dp){
         //base case : if i am in n-1 row return 
@@ -37,4 +39,21 @@ class Solution {
         return dp[0][0];
     }
 
+ int f3(List<List<Integer>>  triangle){
+        int n = triangle.size();
+        int[] future = new int[n];
+        for(int i=0; i<triangle.get(n-1).size(); i++){
+            future[i] = triangle.get(n-1).get(i);
+        }
+        for(int i=triangle.size()-2; i>=0; i--){
+            int[] curr = new int[n];
+            for(int j=i; j>=0; j--){
+               int d = triangle.get(i).get(j) + future[j];
+                int dg = triangle.get(i).get(j) + future[j+1];
+                curr[j] = Math.min(d, dg);
+            }
+            future = curr;
+        }
+        return future[0];
+    }
 }
