@@ -1,17 +1,19 @@
 class Solution {
     public int majorityElement(int[] nums) {
-        int n= nums.length;
-        int thres =(n/2);
-        Map<Integer, Integer> mp = new HashMap<>();
-        for(int i=0; i<n; i++){
-            mp.put(nums[i], mp.getOrDefault(nums[i],0)+1);
+        //Brute
+        // for each number
+        //     count occurrences(O(n^2))
+
+        //Better
+        // use HashMap (O^n)
+
+        //Optimal (Boyer-Moore Voting)
+        int count = 0;
+        int candidate = 0;
+        for(int num: nums){
+            if(count == 0) candidate = num;
+            count += (candidate == num )? 1 : -1;
         }
-        for(int i:nums){
-            int val = mp.get(i);
-            if(val > thres){
-                return i;
-            }
-        }
-        return -1;
+        return candidate;
     }
 }
