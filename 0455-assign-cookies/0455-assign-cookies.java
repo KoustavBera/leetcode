@@ -10,7 +10,7 @@ class Solution {
                 l++;
             }
             
-            r+=1; //satisfied or not move to next ccookie
+            r+=1; //satisfied or not move to next cookie
         }
         return count;
     }
