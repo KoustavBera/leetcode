@@ -4,7 +4,7 @@ class Solution {
        for(int i=0; i<nums.length; i++){
          if(nums[i]!=0){
 
-            if(i!=lastZero){
+            if(i!=lastZero && nums[lastZero] == 0){
                 int temp = nums[i];
                 nums[i] = nums[lastZero];
                 nums[lastZero] = temp;
