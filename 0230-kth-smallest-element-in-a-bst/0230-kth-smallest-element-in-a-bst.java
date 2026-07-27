@@ -13,23 +13,21 @@
  *     }
  * }
  */
- class Result{
-    int val;
-    Result(int val){
-        this.val = val;
-    }        
-}
+
 class Solution {
     int i=1;
-    Result x;
+    int result = 0;
     public int kthSmallest(TreeNode root, int k) {
          inorder(root, k );
-         return x.val;
+         return result;
     }
     void inorder(TreeNode root,int k){
         if(root == null) return;
         inorder(root.left,k);
-        if(i++ == k)  x = new Result(root.val);
+        if(i++ == k){
+              result = root.val ;
+              return;
+        } 
         inorder(root.right,k);
     }
 }
