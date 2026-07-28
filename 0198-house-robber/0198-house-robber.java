@@ -1,19 +1,21 @@
 class Solution {
     public int rob(int[] nums) {
-        int[] dp = new int[nums.length+1];
+        int sum=0;
+        for(int i:nums) sum+=i;
+        int[]dp = new int[nums.length];
         Arrays.fill(dp, -1);
-        return helper(nums, dp, nums.length-1);
+        return f(nums, nums.length-1, dp);
     }
-    int helper(int [] nums, int[] dp, int n){
-        if(n<0) return 0;
-        if(dp[n] != -1){
-            return dp[n];
-        }
-        int rob = nums[n] + helper(nums, dp, n-2);
-        int skip = helper(nums, dp, n-1);
+    int f(int[] nums, int idx,  int[] dp){
+        //dp[i]-> max amount of money from house i
+        if(idx<0)
+            return 0;
+        if(idx==0)
+            return nums[0];
+        if(dp[idx]!=-1) return dp[idx];
 
-        return dp[n]=Math.max(rob, skip);
-
-
+        int notpick = f(nums, idx-1,  dp);
+        int pick = nums[idx]+f(nums, idx-2,  dp);
+        return dp[idx]=Math.max(pick, notpick);
     }
 }
