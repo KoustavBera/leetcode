@@ -31,27 +31,44 @@ class Solution {
         }
     }
 
-    //Tabulation
-        int f3(String s, String t){
-        int[][]dp = new int[s.length()+1][t.length()+1];
-        //here we cant take -1 as a index to check so we will use 1 based indexing
-        // if(j<0) return 1;
-        for(int i=0; i<s.length(); i++){
-            dp[i][0] = 1;
-        }
-        //it becomes
+//     //Tabulation
+//         int f3(String s, String t){
+//         int[][]dp = new int[s.length()+1][t.length()+1];
+//         //here we cant take -1 as a index to check so we will use 1 based indexing
+//         // if(j<0) return 1;
+//         for(int i=0; i<s.length(); i++){
+//             dp[i][0] = 1;
+//         }
+//         //it becomes
+//         for(int i=1; i<=s.length(); i++ ){
+//             for(int j=1; j<=t.length(); j++){
+//                 if(s.charAt(i-1) == t.charAt(j-1)){
+// //  dp[i][j] = f2(s, t, i-1, j-1, dp) + f2(s, t, i-1, j, dp);
+//                     dp[i][j] = dp[i-1][j-1] + dp[i-1][j];
+//                 }
+//                 else
+//                 dp[i][j] = dp[i-1][j];
+//         }
+//             }
+//         return dp[s.length()][t.length()];
+    
+//     }
+    int f3(String s, String t){
+        int[] prev = new int[t.length()+1];
+        prev[0] = 1;
         for(int i=1; i<=s.length(); i++ ){
+        int[] cur = new int[t.length()+1];
+        cur[0]=1;
             for(int j=1; j<=t.length(); j++){
                 if(s.charAt(i-1) == t.charAt(j-1)){
-//  dp[i][j] = f2(s, t, i-1, j-1, dp) + f2(s, t, i-1, j, dp);
-                    dp[i][j] = dp[i-1][j-1] + dp[i-1][j];
+                    cur[j] = prev[j-1] + prev[j];
                 }
                 else
-                dp[i][j] = dp[i-1][j];
+                cur[j] = prev[j];
         }
-            }
-        return dp[s.length()][t.length()];
-    
+        prev = cur;
+        }
+        return prev[t.length()];
     }
 
 }
