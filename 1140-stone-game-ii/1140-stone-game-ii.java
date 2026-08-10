@@ -1,35 +1,71 @@
+import java.util.Arrays;
+
 class Solution {
-    private int dfs(int i, int m, int[] piles, Map<Integer, Integer> memo) {
-        int n = piles.length;
 
-        if (i + m * 2 >= n)
-            return piles[i];
+    private int[][][] dp;
 
-        int key = (i << 8) | m;
+    private int f(int person, int i, int M, int n, int[] piles) {
 
-        if (memo.containsKey(key))
-            return memo.get(key);
+        if (i >= n)
+            return 0;
 
-        int res = Integer.MAX_VALUE;
+        // Already calculated
+        if (dp[person][i][M] != -1)
+            return dp[person][i][M];
 
-        for (int k = 1; k <= m * 2; k++)
-            res = Math.min(res, dfs(i + k, Math.max(m, k), piles, memo));
+        int stones = 0;
 
-        int val = piles[i] - res;
-        
-        memo.put(key, val);
+        int result = (person == 1)
+                ? -1
+                : Integer.MAX_VALUE;
 
-        return val;
+        for (int x = 1; x <= Math.min(2 * M, n - i); x++) {
+
+            stones += piles[i + x - 1];
+
+            if (person == 1) { // Alice
+
+                result = Math.max(
+                    result,
+                    stones + f(
+                        0,
+                        i + x,
+                        Math.max(x, M),
+                        n,
+                        piles
+                    )
+                );
+
+            } else { // Bob
+
+                result = Math.min(
+                    result,
+                    f(
+                        1,
+                        i + x,
+                        Math.max(x, M),
+                        n,
+                        piles
+                    )
+                );
+            }
+        }
+
+        return dp[person][i][M] = result;
     }
 
     public int stoneGameII(int[] piles) {
+
         int n = piles.length;
 
-        for (int i = n - 2; i >= 0; i--)
-            piles[i] += piles[i + 1];
+        dp = new int[2][n][n + 1];
 
-        Map<Integer, Integer> memo = new HashMap<>();
+        for (int person = 0; person < 2; person++) {
+            for (int i = 0; i < n; i++) {
+                Arrays.fill(dp[person][i], -1);
+            }
+        }
 
-        return dfs(0, 1, piles, memo);
+        return f(1, 0, 1, n, piles);
     }
 }
