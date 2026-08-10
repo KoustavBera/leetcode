@@ -3,6 +3,7 @@ class Solution {
         int[][] dp = new int[word1.length()+1][word2.length()+1];
         for(int[] rows: dp) Arrays.fill(rows, -1);
         return f(word1, word2, word1.length(), word2.length(), dp);
+        // return f2(word1, word2, 0, 0);
     }
     int f(String word1, String word2, int i, int j, int[][] dp){
         if(i<0) return j ;
