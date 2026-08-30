@@ -22,13 +22,13 @@ class Solution {
 
         //calculate left tree
         int leftHeight = height(root.left);
-
+        //check right tree
+        int rightHeight = height(root.right);
         if(leftHeight == -1){
             return -1;
         }
 
-        //check right tree
-        int rightHeight = height(root.right);
+        
 
         if(rightHeight == -1){
             return -1;
