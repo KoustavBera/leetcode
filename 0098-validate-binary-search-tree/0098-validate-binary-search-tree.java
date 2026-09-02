@@ -15,27 +15,21 @@
  */
 class Solution {
     public boolean isValidBST(TreeNode root) {
-       return validateBST(root, Long.MAX_VALUE, Long.MIN_VALUE);
+        
+
+      return f(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
-    private boolean validateBST(TreeNode root, long max, long min){
-        //a tree with no node is a valid BST
+    public boolean f(TreeNode root, long min, long max){
         if(root == null) return true;
+        //null is a validBST
 
-        //check if the current node violates the 
-        //squeezed boundaries and return false
-        if(root.val <= min || root.val >= max)
-        return false;
+        if(root.val <= min || root.val >= max) return false;
 
-        //Recurse left except the current max with me the curr val
-        boolean left = validateBST(root.left, root.val, min);
+        //when u go left, min is min, but max is root
+        boolean left = f(root.left, min, root.val);
+        boolean right = f(root.right, root.val, max);
 
-        //Recurse right except the current min with me the curr val
-        boolean right = validateBST(root.right, max, root.val );
-
-        //check if both left and right subtree 
-        //are valid
         return left && right;
-
+        
     }
-
 }
