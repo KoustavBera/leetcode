@@ -15,28 +15,21 @@
  */
 class Solution {
     public boolean isBalanced(TreeNode root) {
-        return height(root) != -1;
+        // 1. traverse left sub trees
+        // 2. find left height
+        // 3. do same for right
+        // 4. if the height diff > 1 then not balanced
+        return f(root) != -1;
     }
-    public static int height(TreeNode root){
-        if(root == null) return 0;
+    int f(TreeNode root){
+        if(root == null ) return 0;
+        int l = f(root.left);
+        if(l==-1) return -1;
+        int r = f(root.right);
+        if(r==-1) return -1;
 
-        //calculate left tree
-        int leftHeight = height(root.left);
-
-        if(leftHeight == -1){
-            return -1;
-        }
-
-        //check right tree
-        int rightHeight = height(root.right);
-
-        if(rightHeight == -1){
-            return -1;
-        }
-
-        if(Math.abs(leftHeight - rightHeight)>1){
-            return -1;
-        }
-        return 1 + Math.max(leftHeight, rightHeight);
+        //now cal height diff
+        if(Math.abs(l - r) > 1) return -1;
+        return 1 + Math.max(l, r);
     }
 }
