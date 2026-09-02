@@ -9,19 +9,30 @@
  */
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if(root == p) return p;
-        if(root == q) return q;
-        if(root == null) return null;
-        //1. search and traverse the tree
-        //2. if p==root return root(left)
-        //3. if q==root return root(right)
-        //4. if both left and right != null return root(this is the LCA)
+        // tree [ null ] -> null
+        // tree [ 3 4 null] -> 3 
+        
+       //case 1: root is null
+       if(root == null){
+        return null;
+       }
+
+       //case 2: root is either p or q
+       if(root == p || root == q){
+        return root; //then root is the LCA and the other one is just a subtree of root
+       }
+
+       //recurse left and right tree
         TreeNode left = lowestCommonAncestor(root.left, p, q);
         TreeNode right = lowestCommonAncestor(root.right, p, q);
-        //if both return not null, that means child must be
-        // found and contained in one of the subtree.
+        
+
+        //if left and right both are not null then -> root is the ancestor
         if(left != null && right != null) return root;
-        if(left == null) return right;
-        else return left;
+
+        //else if right is null then right is a subtree of left and vice-versa
+        return left != null? left : right;
+        
+
     }
 }
