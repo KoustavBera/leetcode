@@ -30,3 +30,16 @@ class Solution {
         return ans;
     }
 }
+
+
+/* 
+Time and space complexity
+
+1st hmap creation -> depends on length of knowledge -> O(K)
+although we have an loop inside another loop each character is
+processed only once there fore the TC O(N)
+
+there fore: The TC O(K+N)
+and space complexity O(K)(for hmap)
+
+*/
