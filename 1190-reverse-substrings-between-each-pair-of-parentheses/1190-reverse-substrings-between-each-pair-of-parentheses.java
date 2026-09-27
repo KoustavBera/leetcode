@@ -1,29 +1,54 @@
 class Solution {
     public String reverseParentheses(String s) {
-        Stack<Character> st1 = new Stack<>() ;
-                                
-// ( a b (c d) ) -> a  ( b ( c d )   ) ->  d c
-                             // ^
-String ans = "";
-        for(int i=0; i<s.length(); i++){
-            char c = s.charAt(i);
-            if(c == ')'){
-                String tmp = "";
-                while(st1.peek()!='(' && !st1.isEmpty()){
-                    tmp += st1.pop();
-                }
-                if(!st1.isEmpty() && st1.peek() == '(')
-                st1.pop();
-                for(char t : tmp.toCharArray()){
-                    st1.push(t);
-                }
+
+        int n = s.length();
+
+        // pair[i] = index of the matching parenthesis
+        int[] pair = new int[n];
+
+        Stack<Integer> st = new Stack<>();
+
+        // Step 1: Find matching parentheses
+        for (int i = 0; i < n; i++) {
+
+            if (s.charAt(i) == '(') {
+                st.push(i);
             }
-            else
-            st1.push(c);
+
+            else if (s.charAt(i) == ')') {
+                int open = st.pop();
+
+                pair[i] = open;
+                pair[open] = i;
+            }
         }
-        while(!st1.isEmpty()){
-            ans  = st1.pop() + ans;
+
+        // Step 2: Traverse the string
+        StringBuilder ans = new StringBuilder();
+
+        int i = 0;
+        int direction = 1;
+
+        while (i < n) {
+
+            char c = s.charAt(i);
+
+            if (c == '(' || c == ')') {
+
+                // Jump to matching bracket
+                i = pair[i];
+
+                // Reverse direction
+                direction = -direction;
+
+            } else {
+
+                ans.append(c);
+            }
+
+            i += direction;
         }
-        return ans;
+
+        return ans.toString();
     }
 }
