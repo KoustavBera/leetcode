@@ -12,8 +12,8 @@ class Solution {
             count++;
             i++;
         }
-        else{ // ')')
-            //check if is ')'
+        else{ 
+            //if is ')'
                 //then check if ( was present before by checking count
                 if(count > 0){
                     //( present so, consume count
@@ -21,18 +21,17 @@ class Solution {
                 }
                 else{
                     //if ( not present then we need one insertion
-                    result++;
+                    result++; // add '('
                 }
 
-            //check if next is )
-            if(i+1<n && s.charAt(i+1)== ')'){
-                i+=2; //jump to that index
-            }else{
-                result++; //insert ) at this
-                i++;
+                //check if next is )
+                if(i+1<n && s.charAt(i+1)== ')') i+=2; //jump to that index
+                else{
+                    result++; //insert ) at this
+                    i++;
+                }
             }
         }
-      }
         return result + 2* count;
 
     }    
